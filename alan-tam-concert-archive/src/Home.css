@@ -1,0 +1,129 @@
+/* --- 1. 背景容器：保住左侧人脸且不切头 --- */
+.home-container {
+    min-height: 100vh;
+    width: 100%;
+    background-size: cover;
+    /* 核心：20% 锁定左侧侧脸，0% 锁定图片顶部确保不切头 */
+    background-position: 20% 60%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    background-color: #050508;
+    overflow-x: hidden;
+}
+
+/* --- 2. 遮罩：右侧压暗，确保横向卡片清晰 --- */
+.home-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* 渐变处理：左侧透出侧脸，右侧加深背景衬托卡片 */
+    background: linear-gradient(to right, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.85) 100%);
+    z-index: 1;
+}
+
+.home-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 20px;
+}
+
+/* --- 3. 标题设计 --- */
+.main-logo {
+    font-size: 4rem;
+    letter-spacing: 12px;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 10px 20px rgba(0,0,0,0.9);
+}
+
+.logo-divider { width: 50px; height: 3px; background: #fff; margin: 15px auto; }
+.main-subtitle { font-size: 1.6rem; letter-spacing: 4px; color: #fff; }
+
+/* --- 4. 横向网格：禁止换行，确保横向排开 --- */
+.poster-grid {
+    display: flex;
+    flex-direction: row; /* 强制横向 */
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 50px;
+    flex-wrap: nowrap; /* PC端不换行 */
+}
+
+/* --- 5. 卡片与海报图片完美自适应 --- */
+.poster-card {
+    flex: 0 0 300px; /* 锁定卡片宽度 */
+    height: 420px;
+    cursor: pointer;
+    transition: transform 0.4s ease;
+}
+
+.poster-inner {
+    height: 100%;
+    border-radius: 16px;
+    background: rgba(20, 20, 25, 0.9); /* 深色背景确保文字清晰 */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
+
+.poster-image-box {
+    width: 100%;
+    height: 65%; /* 海报图片占据上方65% */
+    overflow: hidden;
+}
+
+.poster-img {
+    width: 100%;
+    height: 100%;
+    /* 核心修复：cover 确保海报不拉伸变形 */
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0.9;
+    transition: transform 0.5s ease;
+}
+
+.poster-info {
+    height: 35%; /* 文字区占据下方35% */
+    padding: 15px 20px;
+    background: #0a0a0f; /* 纯黑底色，文字绝对清晰 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.poster-info h3 { font-size: 1.2rem; color: #fff; margin: 5px 0; }
+.concert-tag { font-size: 0.75rem; color: var(--glow); font-weight: bold; }
+
+.poster-year {
+    position: absolute; top: 10px; right: 15px;
+    font-size: 1.8rem; font-weight: 900; color: rgba(255,255,255,0.1);
+}
+
+/* --- 6. 悬停效果 --- */
+.red-theme { --glow: #ff4757; }
+.purple-theme { --glow: #a29bfe; }
+.green-theme { --glow: #2ed573; }
+
+.poster-card:hover { transform: translateY(-12px); }
+.poster-card:hover .poster-inner { border-color: var(--glow); box-shadow: 0 0 30px var(--glow); }
+.poster-card:hover .poster-img { transform: scale(1.1); opacity: 1; }
+
+/* --- 7. 移动端适配 --- */
+@media (max-width: 1024px) {
+    .poster-grid { flex-wrap: wrap; } /* 平板端允许换行 */
+    .poster-card { flex: 0 0 260px; height: 380px; }
+}
+
+@media (max-width: 768px) {
+    .home-container { background-position: 25% 0%; } /* 手机端人物位置微调 */
+    .main-logo { font-size: 2.2rem; }
+    .poster-card { flex: 0 0 45%; height: 260px; } /* 手机端一行两个 */
+    .poster-info h3 { font-size: 0.9rem; }
+}

@@ -1,0 +1,124 @@
+/* --- 1. 基础容器与动态呼吸背景 --- */
+.concert-page {
+    --theme-color: #a29bfe;
+    --theme-glow: rgba(162, 155, 254, 0.4);
+    --theme-bg: rgba(162, 155, 254, 0.15);
+    background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #050508 100%);
+    color: white;
+    min-height: 100vh;
+    padding: 30px;
+    position: relative;
+    overflow-x: hidden;
+    animation: purple-glow-shift 12s ease-in-out infinite alternate;
+}
+
+@keyframes purple-glow-shift {
+    0% { background: radial-gradient(circle at 30% 20%, #1a1a2e 0%, #050508 100%); }
+    100% { background: radial-gradient(circle at 70% 80%, #261a3d 0%, #050508 100%); }
+}
+
+/* --- 2. 梦幻极光与星空层 --- */
+.star-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+.aurora-layer {
+    position: absolute; width: 150%; height: 100%; top: -20%; left: -25%;
+    filter: blur(80px); opacity: 0.12; z-index: -1;
+}
+.aurora-1 {
+    background: radial-gradient(ellipse at 50% 50%, #a29bfe 0%, transparent 70%);
+    animation: aurora-move-1 20s infinite alternate ease-in-out;
+}
+.aurora-2 {
+    background: radial-gradient(ellipse at 70% 30%, #6c5ce7 0%, transparent 60%);
+    animation: aurora-move-2 25s infinite alternate-reverse ease-in-out;
+}
+@keyframes aurora-move-1 { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(100px, 50px) rotate(5deg); } }
+@keyframes aurora-move-2 { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(-150px, -30px) rotate(-8deg); } }
+
+.star { position: absolute; background: white; border-radius: 50%; width: 2px; height: 2px; animation: twinkle infinite ease-in-out; }
+@keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; box-shadow: 0 0 5px #fff; } }
+
+.shooting-star {
+    position: absolute; top: -150px; width: 2px; height: 160px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.9));
+    transform: rotate(45deg); animation: shoot-slow infinite linear;
+}
+@keyframes shoot-slow {
+    0% { transform: translate(0, 0) rotate(45deg) scale(0); opacity: 0; }
+    1% { opacity: 1; transform: translate(0, 0) rotate(45deg) scale(1); }
+    25% { transform: translate(1200px, 1200px) rotate(45deg); opacity: 0; }
+    100% { transform: translate(1200px, 1200px) rotate(45deg); opacity: 0; }
+}
+
+/* --- 3. 高级返回按钮 --- */
+.top-nav {
+    position: relative;
+    z-index: 100;
+
+    /* 方案 A：使用 padding 往下挤，这是最稳妥的 */
+    /*padding-top: 0px;*/
+
+    /* 方案 B：或者使用位移，直接向下移动 40px */
+    transform: translateY(150px);
+
+    margin-bottom: 20px;
+    padding-left: 20px; /* 让按钮离左边框也远一点，更好看 */
+}
+
+.back-home-btn-premium {
+    position: relative; display: flex; align-items: center; gap: 12px;
+    padding: 12px 28px; background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px); border: 1px solid rgba(162, 155, 254, 0.4);
+    border-radius: 50px; color: var(--theme-color); font-size: 0.95rem;
+    font-weight: 500; cursor: pointer; overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.back-home-btn-premium:hover {
+    color: #fff; background: rgba(162, 155, 254, 0.2);
+    box-shadow: 0 0 25px rgba(162, 155, 254, 0.4); transform: translateY(-2px);
+}
+.btn-icon { font-size: 1.2rem; transition: transform 0.3s ease; }
+.back-home-btn-premium:hover .btn-icon { transform: translateX(-5px); }
+
+.btn-glow-effect {
+    position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+.back-home-btn-premium:hover .btn-glow-effect { left: 100%; }
+
+/* --- 4. 核心布局与玻璃拟态 UI --- */
+.content-container { display: flex; gap: 30px; max-width: 1400px; margin: 0 auto; position: relative; z-index: 10; }
+.left-panel { flex: 2; }
+.right-panel { flex: 1; min-width: 380px; }
+
+.glass {
+    background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px;
+    padding: 25px; margin-bottom: 20px;
+}
+.video-box iframe { width: 100%; aspect-ratio: 16/9; border-radius: 15px; border: none; box-shadow: 0 0 40px rgba(0,0,0,0.5), 0 0 20px var(--theme-glow); }
+
+.active-info-bar { border-left: 4px solid var(--theme-color); display: flex; align-items: center; gap: 15px; }
+
+.timeline-box { height: 85vh; display: flex; flex-direction: column; }
+.list-scroll { overflow-y: auto; flex: 1; padding-right: 8px; }
+.list-scroll::-webkit-scrollbar { width: 4px; }
+.list-scroll::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: 10px; }
+
+.track-item {
+    display: flex; padding: 14px; cursor: pointer; border-radius: 10px; transition: 0.3s;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.track-item:hover { background: var(--theme-bg); transform: translateX(10px); }
+.track-time { color: var(--theme-color); font-weight: bold; width: 75px; }
+
+.stage-play { background: rgba(162, 155, 254, 0.1); border-left: 3px solid var(--theme-color); }
+.header-item { background: var(--theme-bg); padding: 15px; margin: 15px 0; border-radius: 10px; text-align: center; }
+.header-item h4 { color: var(--theme-color); margin: 0; }
+
+.main-header h1 { text-align: center; font-size: 3rem; background: linear-gradient(to bottom, #fff, var(--theme-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 10px 0; }
+.sub-title { text-align: center; opacity: 0.5; letter-spacing: 5px; font-size: 0.8rem; margin-bottom: 30px; }
+.section-title { color: var(--theme-color); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 20px; }
+.purple-text { color: var(--theme-color); margin: 15px 0 5px; }
+.trivia-tag { color: var(--theme-color); font-weight: bold; margin-right: 10px; }

@@ -1,0 +1,116 @@
+/* --- 基础容器与动态暗色调 --- */
+.concert-page.red-neon-theme {
+    --theme-color: #ff7675;
+    --red-bright: #d63031;
+    --theme-glow: rgba(214, 48, 49, 0.5);
+    background: #050508;
+    color: white; min-height: 100vh; padding: 30px; position: relative; overflow: hidden;
+}
+
+/* --- 背景动效：极光流动 --- */
+.bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+.aurora-red { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.15; }
+.aurora-1 { width: 80vw; height: 80vh; top: -10%; left: -10%; background: radial-gradient(circle, #d63031 0%, transparent 70%); animation: aurora-rotate 25s infinite linear; }
+.aurora-2 { width: 60vw; height: 60vh; bottom: -5%; right: -5%; background: radial-gradient(circle, #e84393 0%, transparent 70%); animation: aurora-rotate 30s infinite linear reverse; }
+.aurora-3 { width: 40vw; height: 40vh; top: 20%; left: 30%; background: radial-gradient(circle, #ff7675 0%, transparent 70%); animation: aurora-float 15s infinite ease-in-out; }
+
+@keyframes aurora-rotate { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(1.1); } 100% { transform: rotate(360deg) scale(1); } }
+@keyframes aurora-float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(15%, 10%); } }
+
+/* --- 背景动效：星空穿梭 --- */
+.neon-particle {
+    position: absolute; background: white; border-radius: 50%;
+    box-shadow: 0 0 10px var(--theme-color);
+    animation: particle-travel infinite linear;
+}
+@keyframes particle-travel {
+    0% { transform: translateY(0) scale(0.5); opacity: 0; }
+    20% { opacity: 0.5; }
+    80% { opacity: 0.5; }
+    100% { transform: translateY(-150px) scale(1.2); opacity: 0; }
+}
+
+/* --- 核心 UI：标题电压闪烁 & 扫光 --- */
+.flicker-text { animation: flicker 5s linear infinite; }
+@keyframes flicker {
+    0%, 19%, 21%, 62%, 64%, 100% { opacity: 1; text-shadow: 0 0 20px var(--theme-glow); }
+    20%, 63% { opacity: 0.3; text-shadow: none; }
+}
+
+.shine-text {
+    background: linear-gradient(90deg, #fff, #ff7675, #fff);
+    background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: text-shine 4s linear infinite;
+}
+@keyframes text-shine { to { background-position: 200% center; } }
+
+/* --- 视频扫光外框 --- */
+.video-box-wrapper {
+    position: relative; padding: 4px; border-radius: 20px; overflow: hidden;
+    background: linear-gradient(90deg, #d63031, transparent, #ff7675, transparent, #d63031);
+    background-size: 200% 100%; animation: flow-border 4s linear infinite;
+}
+@keyframes flow-border { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+.video-box iframe { width: 100%; aspect-ratio: 16/9; border-radius: 16px; border: none; display: block; background: #000; }
+
+/* --- 玻璃拟态卡片 --- */
+.glass {
+    background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px;
+    padding: 25px; margin-bottom: 20px; position: relative; overflow: hidden;
+}
+.hover-glow:hover { border-color: rgba(214, 48, 49, 0.4); box-shadow: 0 0 30px rgba(214, 48, 49, 0.15); transform: translateY(-5px); transition: 0.4s; }
+
+/* --- 歌单项交互 --- */
+.track-item-86 {
+    display: flex; padding: 16px; cursor: pointer; border-radius: 12px;
+    transition: 0.3s ease; position: relative; overflow: hidden;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.track-item-86:hover { background: rgba(214, 48, 49, 0.15); transform: translateX(12px); }
+.track-hover-light {
+    position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: 0.6s ease;
+}
+.track-item-86:hover .track-hover-light { left: 100%; }
+
+/* --- 其他细节 --- */
+.top-nav {
+    position: relative;
+    z-index: 100;
+
+    /* 方案 A：使用 padding 往下挤，这是最稳妥的 */
+    /*padding-top: 0px;*/
+
+    /* 方案 B：或者使用位移，直接向下移动 40px */
+     transform: translateY(150px);
+
+    margin-bottom: 20px;
+    padding-left: 20px; /* 让按钮离左边框也远一点，更好看 */
+}
+.back-home-btn-premium {
+    background: rgba(214, 48, 49, 0.1); border: 1px solid rgba(214, 48, 49, 0.3);
+    color: #ff7675; padding: 10px 20px; border-radius: 50px; cursor: pointer; transition: 0.3s;
+}
+.back-home-btn-premium:hover { background: #d63031; color: white; box-shadow: 0 0 20px #d63031; }
+
+.main-header {
+    position: relative;
+    z-index: 10;
+    margin-top: 60px; /* 增加这一行，防止标题和固定按钮重叠 */
+    margin-bottom: 40px;
+}
+.main-header h1 { font-size: 3.5rem; text-align: center; margin: 0; }
+.sub-title { text-align: center; opacity: 0.5; letter-spacing: 8px; font-size: 0.9rem; margin-top: 10px; }
+
+.content-container { display: flex; gap: 30px; position: relative; z-index: 10; max-width: 1400px; margin: 0 auto; }
+.left-panel { flex: 2.2; }
+.right-panel { flex: 1; min-width: 380px; }
+
+.red-border { border-left: 5px solid #d63031 !important; }
+.red-line { border-bottom: 1px solid rgba(214, 48, 49, 0.3); padding-bottom: 10px; margin-bottom: 20px; color: #ff7675; }
+.track-time-86 { color: #ff7675; font-weight: bold; width: 80px; font-family: monospace; font-size: 1.1rem; }
+.pulse-fire { display: inline-block; animation: pulse 2s infinite; margin-right: 10px; }
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.7; } }
